@@ -1,0 +1,13 @@
+.container{
+    width: 20%;
+    background-color: #0b0d0f;
+    padding: 2rem;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: 0px;
+    color: white;
+}

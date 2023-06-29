@@ -1,0 +1,43 @@
+.otherContainer{
+    max-width: 70%;
+    background-color: #0b0d0f;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.ownContainer {
+    max-width: 70%;
+    background-color: #2672ed;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+.text{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: white;
+    margin-top: 5px;
+}
+
+.time{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4000000059604645px;
+    color: white;
+    align-self: flex-end;
+}
