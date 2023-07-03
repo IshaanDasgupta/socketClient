@@ -1,0 +1,68 @@
+.container{
+    background-color: #161929;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+    height: 54px;
+}
+
+.flex{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    
+}
+
+.logo{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.name{  
+    color: #E2E2E2;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+}
+
+.date{
+    color: #9F9F9F;
+    font-size: 10px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+}
+
+.icon{
+    width: 35px;
+    height: 35px;
+}
+
+.copyButton{
+    background-color: #1E2757;
+    border-radius: 27px;
+    padding: 8px 16px;    
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.copyIcon{
+    width: 25px;
+    height: 25px;
+}
+
+.copyText{
+    color: #1A71FF;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

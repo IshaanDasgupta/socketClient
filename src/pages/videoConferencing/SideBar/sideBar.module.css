@@ -1,0 +1,53 @@
+.container{
+    height: calc(100vh - 74px);
+    background-color: #1F2335;
+    width: 25vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bottom{
+    width: calc(100% - 20px);
+    padding: 15px 10px;
+    background-color: #161929;
+}
+
+.inputContainer{
+    background-color: #1C1F2E;
+    border-radius: 30px;
+    display: flex;
+    padding: 0 1rem;
+    align-items: center;
+    height: 50px;
+    position: relative;
+}
+
+.input{
+    width: calc(100% +10px);
+    height: 3rem;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    background-color: #1C1F2E;
+    color: #8D8F98;
+    flex: 1;
+}
+
+.sendButton{
+    position: relative;
+    border-radius: 50%;
+    background-color: #1A71FF;
+    width: 40px;
+    height: 40px;   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -10px;
+    cursor: pointer;
+}
+
+.sendIcon{
+    width: 25px;
+    height: 25px;
+}
