@@ -4,16 +4,20 @@ import styles from "./videoFeed.module.css";
 import Video from "../../../components/Video/Video"
 
 import VideoIcon from "../../../static/videoConferencing/VideoIcon.svg";
+import { useNavigate } from 'react-router-dom';
 
 const VideoFeed = (props) => {
 
+  const navigate = useNavigate();
+
   const containerRef = useRef();
+
   const [videoFeedWidth , setVideoFeedWidth] = useState();
   const [videoFeedHeight , setVideoFeedHeight] = useState();
-
   const [widthPerVid , setWidthPerVid] = useState();
   const [heightPerVid , setHeightPerVid] = useState();
 
+  const socket = props.socket;
   const userStream = props.userStream;
   const otherVideoStream = props.otherVideoStream;
 
@@ -26,11 +30,11 @@ const VideoFeed = (props) => {
   otherVideoStream.forEach((videoStream) => {
     if (arrayOfVideos[arrayOfVideos.length-1].length === col){
       const temp = [];
-      temp.push(videoStream);
+      temp.push(videoStream.stream);
       arrayOfVideos.push(temp);
     }
     else{
-      arrayOfVideos[arrayOfVideos.length-1].push(videoStream);
+      arrayOfVideos[arrayOfVideos.length-1].push(videoStream.stream);
     }
   })
 
@@ -61,11 +65,12 @@ const VideoFeed = (props) => {
   useEffect(()=>{
     setWidthPerVid(Math.ceil((videoFeedWidth- (col-1)*20)/col));
     setHeightPerVid(Math.ceil((videoFeedHeight - 80 - (row-1)*20)/row));
-
-    console.log("width ", widthPerVid);
-    console.log("height " , heightPerVid);
-    console.log("row " , row);
   }, [containerRef , props]);
+
+  const handleEndCall = () => {
+    socket.current.emit("forceDisconnect" , socket.current.id);
+    navigate("/home");
+  }
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -96,7 +101,7 @@ const VideoFeed = (props) => {
               </div>
             );
           })}
-          <div className={styles.endCallButton}>
+          <div className={styles.endCallButton} onClick={handleEndCall}>
             <p className={styles.endCallText}>End Call</p>
           </div>
         </div>

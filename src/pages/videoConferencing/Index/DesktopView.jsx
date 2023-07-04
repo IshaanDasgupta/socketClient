@@ -15,48 +15,51 @@ const VideoConferencing = (props) => {
     const socket = useRef();
     const [userStream , setUserStream] = useState(); 
     const [otherVideoStream , setOtherVideoStream] = useState([]);
+    const [chatMessages , setChatMessages] = useState([]);
 
-    const callList = [];
+    let callList = [];
 
     useEffect(() => {
         socket.current = io('https://socketserver-9w11.onrender.com');
 
         socket.current.on("connect", () => {
-            // console.log("my socket id ", socket.current.id);
             const peer = new Peer(socket.current.id);
             peer.on("open" , () => {
                 navigator.mediaDevices.getUserMedia({audio:true , video:true}).then(stream => {
 
-                    // userStream.current.srcObject = stream;
                     setUserStream(stream);
 
                     peer.on("call" , (call) => {
-                        // console.log("call recived from " , socket.current.id);
                         call.answer(stream);
                         call.on("stream" , (remoteStream) => {
-                            
                             if (!callList[call.peer]){
-                                setOtherVideoStream(oldVideoStream => [...oldVideoStream , remoteStream]);
+                                setOtherVideoStream(oldVideoStream => [...oldVideoStream , {stream:remoteStream , peer:call.peer}]);
                                 callList[call.peer] = call;
                             }
-                            // console.log("remoteStream recived " , remoteStream);
                         })
+                    })
+
+                    socket.current.on("userLeft" , (userID) => { 
+                        console.log("user left " , userID);
+                        callList[userID] = undefined;
+                        setOtherVideoStream(oldVideoStream => oldVideoStream.filter(stream => stream.peer !== userID))
                     })
 
                     socket.current.emit("joinRoom" , roomID);
                     socket.current.on('restUsersInRoom' , (restUsersInRoom) => {
-                        console.log(restUsersInRoom);
                         restUsersInRoom.forEach((userID) => {
-                            // console.log("calling " , userID);
                             const call = peer.call(userID , stream);
                             call.on("stream" , (remoteStream) => {
                                 if (!callList[call.peer]){
-                                    setOtherVideoStream(oldVideoStream => [...oldVideoStream , remoteStream]);
+                                    setOtherVideoStream(oldVideoStream => [...oldVideoStream , {stream:remoteStream , peer:call.peer}]);
                                     callList[call.peer] = call;
                                 }
-                                // console.log("remoteStream recived " , remoteStream);
                             })
                         })
+                    })
+
+                    socket.current.on("messageRecievedInRoom" , (msgDetails) => {
+                        setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID}])
                     })
 
                 }).catch(err => console.log(err))
@@ -69,24 +72,15 @@ const VideoConferencing = (props) => {
 
     useEffect(() => {
         console.log(otherVideoStream);
-    } , [otherVideoStream])
+    }, [callList])
 
     return (
         <div>
             <TopBar/>
             <div className={styles.flex}>
-                <VideoFeed userStream={userStream} otherVideoStream={otherVideoStream}  className={styles.flex1}/>
-                <Sidebar/>
+                <VideoFeed userStream={userStream} otherVideoStream={otherVideoStream} socket={socket} className={styles.flex1}/>
+                <Sidebar socket={socket} chatMessages={chatMessages} setChatMessages={setChatMessages}/>
             </div>
-            {/* <div>
-                <video ref={userStreamRef} autoPlay muted/>
-
-            </div>
-            {otherVideoStream.map((videoStream , index) => {
-                return (
-                    <Video stream={videoStream} />
-                )
-            })} */}
         </div>
     )
 

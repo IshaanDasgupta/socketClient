@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const ChatBubble = (props) => {
   const userId = useSelector((state) => state.userDetails.userId);
-
   const scroll = useRef();
 
   useEffect(()=>{
