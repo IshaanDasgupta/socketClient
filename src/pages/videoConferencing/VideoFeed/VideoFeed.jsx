@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from "./videoFeed.module.css";
+import { useNavigate } from 'react-router-dom';
 
 import Video from "../../../components/Video/Video"
-
 import VideoIcon from "../../../static/videoConferencing/VideoIcon.svg";
-import { useNavigate } from 'react-router-dom';
+import AudioIcon from "../../../static/videoConferencing/AudioIcon.svg";
+import ChatIcon from "../../../static/videoConferencing/ChatIcon.svg";
+import DisableVideoIcon from "../../../static/videoConferencing/DisableVideoIcon.svg";
+import DisableAudioIcon from "../../../static/videoConferencing/DisableAudioIcon.svg";
+import DisableChatIcon from "../../../static/videoConferencing/DisableChatIcon.svg";
+
+
+import styles from "./videoFeed.module.css";
 
 const VideoFeed = (props) => {
 
@@ -16,9 +22,15 @@ const VideoFeed = (props) => {
   const [videoFeedHeight , setVideoFeedHeight] = useState();
   const [widthPerVid , setWidthPerVid] = useState();
   const [heightPerVid , setHeightPerVid] = useState();
+  const [videoOption , setVideoOption] = useState(true);
+  const [audioOption , setAudioOption] = useState(true);
+  const chatOption = props.chatOption;
+  const setChatOption = props.setChatOption;
+
 
   const socket = props.socket;
   const userStream = props.userStream;
+  const setUserStream = props.setUserStream;
   const otherVideoStream = props.otherVideoStream;
 
   const count = 1 + otherVideoStream.length;
@@ -38,25 +50,6 @@ const VideoFeed = (props) => {
     }
   })
 
-  const option = [
-    {
-      icon: VideoIcon,
-
-    },
-    {
-      icon: VideoIcon,
-    },
-    {
-      icon: VideoIcon,
-    },
-    {
-      icon: VideoIcon,
-    },
-    {
-      icon: VideoIcon,
-    }
-  ];
-
   useEffect(() => {
     setVideoFeedWidth(containerRef.current.clientWidth - 40);
     setVideoFeedHeight(containerRef.current.clientHeight - 40);
@@ -71,6 +64,61 @@ const VideoFeed = (props) => {
     socket.current.emit("forceDisconnect" , socket.current.id);
     navigate("/home");
   }
+
+  const triggerVideo = () => {
+    setUserStream(userStream => {
+      const videoTrack = userStream.getTracks().find((track) => track.kind === 'video');
+      if (videoTrack.enabled === true){
+          console.log("reached here");
+          videoTrack.enabled = false;
+      }
+      else{
+          videoTrack.enabled = true;
+      }
+      return userStream;
+    })
+    setVideoOption(prevState => !prevState);
+  }
+
+  const triggerAudio = () => {
+    setUserStream(userStream => {
+      const videoTrack = userStream.getTracks().find((track) => track.kind === 'audio');
+      if (videoTrack.enabled === true){
+          console.log("reached here");
+          videoTrack.enabled = false;
+      }
+      else{
+          videoTrack.enabled = true;
+      }
+      return userStream;
+    })
+    setAudioOption(prevState => !prevState);
+  }
+
+  const triggerChat = () => {
+    setChatOption(prevState => !prevState);
+  }
+
+  const option = [
+    {
+      icon: VideoIcon,
+      function: triggerVideo,
+      disableIcon: DisableVideoIcon,
+      state: videoOption
+    },
+    {
+      icon: AudioIcon,
+      function: triggerAudio,
+      disableIcon: DisableAudioIcon,
+      state: audioOption
+    },
+    {
+      icon: ChatIcon,
+      function: triggerChat,
+      disableIcon: DisableChatIcon,
+      state: chatOption
+    }
+  ];
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -96,9 +144,15 @@ const VideoFeed = (props) => {
         <div className={styles.optionContainer}>
           {option.map((optionObj) => {
             return (
-              <div className={styles.option}>
-                <img src={optionObj.icon} alt="" className={styles.optionIcon}/>
-              </div>
+              optionObj.state === true ? 
+                <div className={styles.option} onClick={optionObj.function}>
+                  <img src={optionObj.icon} alt="" className={styles.optionIcon} />
+                </div>
+              :
+
+                <div className={styles.disabledOption} onClick={optionObj.function}>
+                  <img src={optionObj.disableIcon} alt="" className={styles.optionIcon} />
+                </div>
             );
           })}
           <div className={styles.endCallButton} onClick={handleEndCall}>

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 const ChatBubble = (props) => {
   const userId = useSelector((state) => state.userDetails.userId);
+  const socketID = useSelector((state) => state.socketDetails.socketID);
   const scroll = useRef();
 
   useEffect(()=>{
@@ -13,13 +14,20 @@ const ChatBubble = (props) => {
   },)
 
   return (
-    <div className={props.senderID === userId ? styles.ownContainer : styles.otherContainer} ref={scroll}>
+    <div className={props.senderID === userId || props.senderID === socketID ? styles.ownContainer : styles.otherContainer} ref={scroll}>
+        {props.name && 
+          <div className={styles.time}>
+            {props.name}
+          </div> 
+        }
         <div className={styles.text}>
             {props.text}
         </div>
-        <div className={styles.time}>
-            {format(props.createdAt)}
-        </div>
+        {props.createdAt && 
+          <div className={styles.time}>
+              {format(props.createdAt)}
+          </div>
+        }
     </div>
   )
 }

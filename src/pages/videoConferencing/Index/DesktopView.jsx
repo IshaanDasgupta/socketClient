@@ -8,14 +8,20 @@ import VideoFeed from "../VideoFeed/VideoFeed";
 import Sidebar from "../SideBar/Sidebar";
 
 import styles from "./desktopView.module.css";
+import { useDispatch } from "react-redux";
+import { setSocketID } from "../../../features/socketDetails/socketDetails";
 
 const VideoConferencing = (props) => {
     const {roomID} = useParams();
 
     const socket = useRef();
+
     const [userStream , setUserStream] = useState(); 
     const [otherVideoStream , setOtherVideoStream] = useState([]);
     const [chatMessages , setChatMessages] = useState([]);
+    const [chatOption , setChatOption] = useState(false);
+
+    const dispath = useDispatch();
 
     let callList = [];
 
@@ -23,6 +29,7 @@ const VideoConferencing = (props) => {
         socket.current = io('https://socketserver-9w11.onrender.com');
 
         socket.current.on("connect", () => {
+            dispath(setSocketID(socket.current.id));
             const peer = new Peer(socket.current.id);
             peer.on("open" , () => {
                 navigator.mediaDevices.getUserMedia({audio:true , video:true}).then(stream => {
@@ -59,7 +66,7 @@ const VideoConferencing = (props) => {
                     })
 
                     socket.current.on("messageRecievedInRoom" , (msgDetails) => {
-                        setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID}])
+                        setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID , senderName:msgDetails.senderName}])
                     })
 
                 }).catch(err => console.log(err))
@@ -74,12 +81,14 @@ const VideoConferencing = (props) => {
         console.log(otherVideoStream);
     }, [callList])
 
+
+
     return (
         <div>
             <TopBar/>
             <div className={styles.flex}>
-                <VideoFeed userStream={userStream} otherVideoStream={otherVideoStream} socket={socket} className={styles.flex1}/>
-                <Sidebar socket={socket} chatMessages={chatMessages} setChatMessages={setChatMessages}/>
+                <VideoFeed userStream={userStream} setUserStream={setUserStream} otherVideoStream={otherVideoStream} socket={socket} chatOption={chatOption} setChatOption={setChatOption} className={styles.flex1}/>
+                {chatOption === true && <Sidebar socket={socket} chatMessages={chatMessages} setChatMessages={setChatMessages}/>}
             </div>
         </div>
     )

@@ -3,8 +3,18 @@ import styles from "./topBar.module.css";
 import Icon from "../../../static/videoConferencing/Icon.svg";
 import ProfilePic from '../../../static/tempProfile.png';
 import CopyButton from '../../../static/videoConferencing/CopyButton.svg';
+import { useLocation, useParams } from 'react-router-dom';
 
 const TopBar = () => {
+
+  const {roomID} = useParams();
+  const location = useLocation();
+
+  const handleCopy = () => {
+    console.log(location);
+    navigator.clipboard.writeText(location.pathname);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.flex}>
@@ -20,9 +30,9 @@ const TopBar = () => {
         <div className={styles.iconContainer}>
           <img src={ProfilePic} alt="" className={styles.icon}/>
         </div>
-        <div className={styles.copyButton}>
+        <div className={styles.copyButton} onClick={handleCopy}>
           <img src={CopyButton} alt="" className={styles.copyIcon}/>
-          <p className={styles.copyText}>cem-jads-asdf</p>
+          <p className={styles.copyText}>{roomID}</p>
         </div>
       </div>
     </div>
