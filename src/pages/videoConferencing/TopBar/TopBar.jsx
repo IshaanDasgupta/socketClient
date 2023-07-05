@@ -3,16 +3,14 @@ import styles from "./topBar.module.css";
 import Icon from "../../../static/videoConferencing/Icon.svg";
 import ProfilePic from '../../../static/tempProfile.png';
 import CopyButton from '../../../static/videoConferencing/CopyButton.svg';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const TopBar = () => {
 
   const {roomID} = useParams();
-  const location = useLocation();
 
   const handleCopy = () => {
-    console.log(location);
-    navigator.clipboard.writeText(location.pathname);
+    navigator.clipboard.writeText(window.location.href);
   }
 
   return (
