@@ -4,9 +4,12 @@ import Icon from "../../../static/videoConferencing/Icon.svg";
 import ProfilePic from '../../../static/tempProfile.png';
 import CopyButton from '../../../static/videoConferencing/CopyButton.svg';
 import { useParams } from 'react-router-dom';
+import multiavatart from "@multiavatar/multiavatar";
+import { useSelector } from 'react-redux';
 
 const TopBar = () => {
 
+  const svgCode  = useSelector((state) => state.userDetails.profilePic);
   const {roomID} = useParams();
 
   const handleCopy = () => {
@@ -25,8 +28,8 @@ const TopBar = () => {
         </div>
       </div>
       <div className={styles.flex}>
-        <div className={styles.iconContainer}>
-          <img src={ProfilePic} alt="" className={styles.icon}/>
+        <div className={styles.iconContainer} dangerouslySetInnerHTML={{__html: svgCode}}>
+          {/* <img src={ProfilePic} alt="" className={styles.icon}/> */}
         </div>
         <div className={styles.copyButton} onClick={handleCopy}>
           <img src={CopyButton} alt="" className={styles.copyIcon}/>

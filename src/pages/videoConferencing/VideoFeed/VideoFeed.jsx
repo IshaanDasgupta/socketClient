@@ -57,12 +57,12 @@ const VideoFeed = (props) => {
 
   useEffect(()=>{
     setWidthPerVid(Math.ceil((videoFeedWidth- (col-1)*20)/col));
-    setHeightPerVid(Math.ceil((videoFeedHeight - 80 - (row-1)*20)/row));
+    setHeightPerVid(Math.ceil((videoFeedHeight - 74 - (row-1)*20)/row));
   }, [containerRef , props]);
 
   const handleEndCall = () => {
     socket.current.emit("forceDisconnect" , socket.current.id);
-    navigate("/home");
+    navigate("/");
   }
 
   const triggerVideo = () => {
@@ -84,7 +84,6 @@ const VideoFeed = (props) => {
     setUserStream(userStream => {
       const videoTrack = userStream.getTracks().find((track) => track.kind === 'audio');
       if (videoTrack.enabled === true){
-          console.log("reached here");
           videoTrack.enabled = false;
       }
       else{
@@ -142,19 +141,29 @@ const VideoFeed = (props) => {
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.optionContainer}>
-          {option.map((optionObj) => {
-            return (
-              optionObj.state === true ? 
-                <div className={styles.option} onClick={optionObj.function}>
-                  <img src={optionObj.icon} alt="" className={styles.optionIcon} />
-                </div>
-              :
+          {userStream ?  
+              option.map((optionObj) => {
+                return (
+                  optionObj.state === true ? 
+                    <div className={styles.option} onClick={optionObj.function}>
+                      <img src={optionObj.icon} alt="" className={styles.optionIcon} />
+                    </div>
+                  :
 
-                <div className={styles.disabledOption} onClick={optionObj.function}>
-                  <img src={optionObj.disableIcon} alt="" className={styles.optionIcon} />
-                </div>
-            );
-          })}
+                    <div className={styles.disabledOption} onClick={optionObj.function}>
+                      <img src={optionObj.disableIcon} alt="" className={styles.optionIcon} />
+                    </div>
+                );
+              })
+            :
+              option.map((optionObj) => {
+                return (
+                  <div className={styles.disable}>
+                    <img src={optionObj.icon} alt="" className={styles.optionIcon} />
+                  </div>
+                );
+              })
+          }
           <div className={styles.endCallButton} onClick={handleEndCall}>
             <p className={styles.endCallText}>End Call</p>
           </div>

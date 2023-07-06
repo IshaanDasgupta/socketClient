@@ -1,0 +1,109 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #0b0d0f;
+}
+
+.contentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginSVG {
+    width: 342px;
+    height: 152px;
+    margin-bottom: 40px;
+}
+
+.input {
+    width: 424px;
+    height: 44px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    color: #C3D0E580;
+    background-color: #1e232a;
+    padding: 0 12px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    margin-bottom: 25px;
+    border: 1px solid #2a313c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heading{
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.iconFlex{
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 0;
+    align-items: center;
+}
+
+.icon{
+    width: 200px;
+    height: 200px;
+    opacity: 0.2;
+    cursor: pointer;
+    -webkit-transition: 1s;
+}
+
+.selectedIcon{
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+    -webkit-transition: 1s;
+}
+
+.flex{
+    display: flex;
+    gap: 20px;
+}
+
+.button {
+    color: white;
+    background-color: #2672ed;
+    width: 160px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.refreshButton {
+    color: white;
+    background-color: #2a313c;
+    width: 160px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
