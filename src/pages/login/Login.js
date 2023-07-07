@@ -1,15 +1,18 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserId } from '../../features/userDetails/userDetailsSlice';
+import { setProfilePic, setUserId } from '../../features/userDetails/userDetailsSlice';
 import styles from './Login.module.css';
 import LoginImg from '../../static/login/loginSVG.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email , setEmail] =useState("");
     const [password , setPassword] = useState("");
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const handleNameChange = (e) => {
         setEmail(e.target.value);
@@ -24,7 +27,8 @@ const Login = () => {
         try{
             const res = await axios.post('https://socketserver-9w11.onrender.com/api/user/login' , {email : email , password: password});
             dispatch(setUserId(res.data._id));
-            console.log(res.data._id);
+            dispatch(setProfilePic(res.data.profilePic));
+            navigate("/");
         }
         catch(err){
             console.log(err);

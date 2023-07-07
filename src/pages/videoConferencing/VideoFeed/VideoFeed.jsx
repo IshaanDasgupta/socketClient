@@ -27,7 +27,6 @@ const VideoFeed = (props) => {
   const chatOption = props.chatOption;
   const setChatOption = props.setChatOption;
 
-
   const socket = props.socket;
   const userStream = props.userStream;
   const setUserStream = props.setUserStream;
@@ -53,12 +52,21 @@ const VideoFeed = (props) => {
   useEffect(() => {
     setVideoFeedWidth(containerRef.current.clientWidth - 40);
     setVideoFeedHeight(containerRef.current.clientHeight - 40);
-  }, [containerRef])
+    window.addEventListener('resize', setDimension);
+    return () => {
+      window.removeEventListener('resize', setDimension)
+    }
+  }, [])
+
+  const setDimension = () => {
+    setVideoFeedWidth(containerRef.current.clientWidth - 40);
+    setVideoFeedHeight(containerRef.current.clientHeight - 40);
+  }
 
   useEffect(()=>{
-    setWidthPerVid(Math.ceil((videoFeedWidth- (col-1)*20)/col));
+    setWidthPerVid(Math.min( Math.ceil((videoFeedWidth- (col-1)*20)/col) ,  Math.ceil( 2 *Math.ceil((videoFeedHeight - 74 - (row-1)*20)/row))));
     setHeightPerVid(Math.ceil((videoFeedHeight - 74 - (row-1)*20)/row));
-  }, [containerRef , props]);
+  }, [containerRef , videoFeedHeight , videoFeedWidth ,col , row]);
 
   const handleEndCall = () => {
     socket.current.emit("forceDisconnect" , socket.current.id);
@@ -69,7 +77,6 @@ const VideoFeed = (props) => {
     setUserStream(userStream => {
       const videoTrack = userStream.getTracks().find((track) => track.kind === 'video');
       if (videoTrack.enabled === true){
-          console.log("reached here");
           videoTrack.enabled = false;
       }
       else{

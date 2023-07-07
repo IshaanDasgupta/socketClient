@@ -1,0 +1,51 @@
+.container{
+    height: 54px;
+    background-color: #161929;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo{
+    width: 50px;
+    height: 50px;
+}
+
+.profilePic{
+    width: 35px;
+    height: 35px;
+}
+
+.flex{
+    display: flex;
+    gap: 20px;
+}
+
+.button1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 2px solid #1A71FF;
+    color: #1A71FF;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500px;
+    letter-spacing: -0.5px;
+    font-size: 14px;
+}
+
+.button2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #1A71FF;
+    color: #E2E2E2;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500px;
+    letter-spacing: -0.5px;
+    font-size: 14px;
+}

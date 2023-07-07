@@ -8,7 +8,7 @@ import VideoFeed from "../VideoFeed/VideoFeed";
 import Sidebar from "../SideBar/Sidebar";
 
 import styles from "./desktopView.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSocketID } from "../../../features/socketDetails/socketDetails";
 
 const VideoConferencing = (props) => {
@@ -20,8 +20,15 @@ const VideoConferencing = (props) => {
     const [otherVideoStream , setOtherVideoStream] = useState([]);
     const [chatMessages , setChatMessages] = useState([]);
     const [chatOption , setChatOption] = useState(false);
+    const [otherMongoID , setOtherMongoID] = useState([]);
+    const [roomName , setRoomName] = useState("");
+    const [roomTimestamp , setRoomTimestamp] = useState("");
+
 
     const dispath = useDispatch();
+
+    const userMongoID = useSelector((state) => state.userDetails.userId);
+
 
     let callList = [];
 
@@ -46,16 +53,29 @@ const VideoConferencing = (props) => {
                         })
                     })
 
-                    socket.current.on("userLeft" , (userID) => { 
-                        console.log("user left " , userID);
-                        callList[userID] = undefined;
-                        setOtherVideoStream(oldVideoStream => oldVideoStream.filter(stream => stream.peer !== userID))
+                    socket.current.on("userLeft" , (userDetails) => { 
+                        callList[userDetails.socketID] = undefined;
+                        setOtherVideoStream(oldVideoStream => oldVideoStream.filter(stream => stream.peer !== userDetails.socketID))
+                        setOtherMongoID(prevMongoID => prevMongoID.filter(id => id !== userDetails.mongoID));
                     })
 
-                    socket.current.emit("joinRoom" , roomID);
+                    socket.current.on("receivingMongoID" , (mongoID) => {
+                        console.log("receiving id " , mongoID);
+                        setOtherMongoID((prevID) => [...prevID , mongoID]);
+                    })
+
+                    socket.current.on("roomDetails" , (roomDetails) => {
+                        setRoomName(roomDetails.roomName);
+                        setRoomTimestamp(roomDetails.roomTimestamp);
+                    })
+
+                    socket.current.emit("joinRoom" , {roomID , userMongoID});
                     socket.current.on('restUsersInRoom' , (restUsersInRoom) => {
-                        restUsersInRoom.forEach((userID) => {
-                            const call = peer.call(userID , stream);
+                        restUsersInRoom.forEach((userObj) => {
+                            console.log("userobj " , userObj);
+                            setOtherMongoID((prevID) => [...prevID , userObj.mongoID]);
+                            socket.current.emit("sendingMongoID" , { targetSocketID:userObj.socketID , senderMongoID:userMongoID});
+                            const call = peer.call(userObj.socketID , stream);
                             call.on("stream" , (remoteStream) => {
                                 if (!callList[call.peer]){
                                     setOtherVideoStream(oldVideoStream => [...oldVideoStream , {stream:remoteStream , peer:call.peer}]);
@@ -66,7 +86,7 @@ const VideoConferencing = (props) => {
                     })
 
                     socket.current.on("messageRecievedInRoom" , (msgDetails) => {
-                        setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID , senderName:msgDetails.senderName}])
+                        setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID , senderPfp:msgDetails.senderPfp , senderName:msgDetails.senderName}])
                     })
 
                 }).catch(err => console.log(err))
@@ -85,7 +105,7 @@ const VideoConferencing = (props) => {
 
     return (
         <div>
-            <TopBar/>
+            <TopBar otherMongoID={otherMongoID} roomName={roomName} roomTimestamp={roomTimestamp}/>
             <div className={styles.flex}>
                 <VideoFeed userStream={userStream} setUserStream={setUserStream} otherVideoStream={otherVideoStream} socket={socket} chatOption={chatOption} setChatOption={setChatOption} className={styles.flex1}/>
                 {chatOption === true && <Sidebar socket={socket} chatMessages={chatMessages} setChatMessages={setChatMessages}/>}

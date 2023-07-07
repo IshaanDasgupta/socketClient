@@ -30,7 +30,7 @@ const ChatTab = (props) => {
   return (
     <>
     <div className={selectedFriend === friendId ?  `${styles.container} ${styles.selected}` : styles.container} onClick={handleSelection}>
-        <img src={ProfilePic} alt="" className={styles.imgContainer}/>
+        <div className={styles.imgContainer} dangerouslySetInnerHTML={{__html:friend.profilePic}}/>
         <div>
             <div className={styles.name}>{friend.name}</div>
             {props.online !== undefined ? <div className={styles.online}>Online</div> : <></>}

@@ -56,7 +56,7 @@ const Chatbox = () => {
     const getFriendData = async(id)=>{
       const res = await axios.get(`https://socketserver-9w11.onrender.com/api/user/${id}`);
       setFriendName(res.data.name);
-      setFriendImg(res.data.img);
+      setFriendImg(res.data.profilePic);
     }
 
     if (selectedFriendId.length){
@@ -82,7 +82,8 @@ const Chatbox = () => {
       const {data} = await axios.post('https://socketserver-9w11.onrender.com/api/message' , {chatID : chatID , senderID: userId , text : currMessage});
       setCurrMessage("");
       setChat([...chat , data]);
-      socket.current.emit('sendMessage' ,  {chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId});
+      // console.log({chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
+      socket.current.emit('sendMessage' ,  {chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
     }
     catch(err){
       console.log(err);
@@ -95,7 +96,7 @@ const Chatbox = () => {
         <div className={styles.titleContainer}>
           {chatID.length ? 
             <>
-              <img src={friendImg || ProfilePic} alt=""  className={styles.profilePic}/>
+              <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:friendImg}}/>
               <div className={styles.name}>{friendName}</div>
             </>
           : 
