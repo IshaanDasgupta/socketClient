@@ -101,13 +101,11 @@ const VideoConferencing = (props) => {
         console.log(otherVideoStream);
     }, [callList])
 
-
-
     return (
         <div>
             <TopBar otherMongoID={otherMongoID} roomName={roomName} roomTimestamp={roomTimestamp}/>
             <div className={styles.flex}>
-                <VideoFeed userStream={userStream} setUserStream={setUserStream} otherVideoStream={otherVideoStream} socket={socket} chatOption={chatOption} setChatOption={setChatOption} className={styles.flex1}/>
+                <VideoFeed userStream={userStream} setUserStream={setUserStream} otherVideoStream={otherVideoStream} otherMongoID={otherMongoID} socket={socket} chatOption={chatOption} setChatOption={setChatOption} className={styles.flex1}/>
                 {chatOption === true && <Sidebar socket={socket} chatMessages={chatMessages} setChatMessages={setChatMessages}/>}
             </div>
         </div>

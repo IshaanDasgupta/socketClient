@@ -5,9 +5,40 @@
 }
 
 .heading {
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 32px;
-    letter-spacing: 0px;
-    color: white;
+    color: #E2E2E2;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+}
+
+.addFriendContainer{
+    display: flex;
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1A71FF;
+    cursor: pointer;
+}
+
+.text{
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.5px;
+    color: #E2E2E2;
+}
+
+.iconContainer{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 10px;
+    background-color: #E2E2E2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

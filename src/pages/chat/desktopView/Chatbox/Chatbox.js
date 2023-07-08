@@ -33,7 +33,7 @@ const Chatbox = () => {
       setChatID(res.data[0]._id);
     }
 
-    if (userId.length !== 0 && selectedFriendId.length !== 0){
+    if (userId !== null && userId.length !== 0 && selectedFriendId !== null && selectedFriendId.length !== 0){
       fetchChatID(userId , selectedFriendId);
     }
   });
@@ -45,7 +45,7 @@ const Chatbox = () => {
       setChat(res.data);
     }
 
-    if (chatID.length !== 0){
+    if (chatID != null && chatID.length !== 0){
       fetchChat();
     }
 
@@ -59,7 +59,7 @@ const Chatbox = () => {
       setFriendImg(res.data.profilePic);
     }
 
-    if (selectedFriendId.length){
+    if (selectedFriendId != null && selectedFriendId.length){
       getFriendData(selectedFriendId);
     }
   }, [selectedFriendId])
@@ -77,16 +77,24 @@ const Chatbox = () => {
 
 
   const handleSend = async(e) => {
-    e.preventDefault();
-    try{
-      const {data} = await axios.post('https://socketserver-9w11.onrender.com/api/message' , {chatID : chatID , senderID: userId , text : currMessage});
-      setCurrMessage("");
-      setChat([...chat , data]);
-      // console.log({chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
-      socket.current.emit('sendMessage' ,  {chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
+      e.preventDefault();
+      if (currMessage != null && currMessage.length > 0){
+      try{
+        const {data} = await axios.post('https://socketserver-9w11.onrender.com/api/message' , {chatID : chatID , senderID: userId , text : currMessage});
+        setCurrMessage("");
+        setChat([...chat , data]);
+        // console.log({chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
+        socket.current.emit('sendMessage' ,  {chatID : chatID , senderID: userId , text : currMessage , reciverID : selectedFriendId , createdAt:data.createdAt});
+      }
+      catch(err){
+        console.log(err);
+      }
     }
-    catch(err){
-      console.log(err);
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter'){
+      handleSend();
     }
   }
 
@@ -94,7 +102,7 @@ const Chatbox = () => {
     <div className={styles.container}>
       <div className={styles.mainContainer}>
         <div className={styles.titleContainer}>
-          {chatID.length ? 
+          {chatID !== null && chatID.length ? 
             <>
               <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:friendImg}}/>
               <div className={styles.name}>{friendName}</div>
@@ -106,7 +114,7 @@ const Chatbox = () => {
 
         </div>
         <div className={styles.chatContainer}>
-          {chatID.length ? 
+          {chatID !== null && chatID.length ? 
             <div className={styles.chats}>
               {chat.map((data) => {
                 return <ChatBubble senderID={data.senderID} text={data.text} createdAt={data.createdAt} key={data._id}/>
@@ -119,7 +127,7 @@ const Chatbox = () => {
 
         </div>
         <div className={styles.inputContainer}>
-          <input type="text" className={styles.input} value={currMessage} onChange={(e)=> setCurrMessage(e.target.value)}/>
+          <input type="text" className={styles.input} value={currMessage} onChange={(e)=> setCurrMessage(e.target.value)} onKeyDown={handleKeyPress}/>
           <button className={styles.button} onClick={handleSend}>Send</button>
         </div>
       </div>

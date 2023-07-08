@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import styles from './Sidebar.module.css';
 import ChatTab from '../../../../components/chatTab/ChatTab';
+import Modal from '../../../../components/modal/Modal';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/fontawesome-free-solid'
+
+import styles from './Sidebar.module.css';
 
 const Sidebar = () => {
   const [chats , setChats] = useState([]);
+  const [showModal , setShowModal] = useState(false);
 
   const userId = useSelector((state) => state.userDetails.userId);
 
@@ -20,6 +25,10 @@ const Sidebar = () => {
     }
   },[])
 
+  const handleShowModal = () => {
+    setShowModal(true);
+  }
+
   return (
     <div className={styles.container}>
         <div className={styles.heading}>Your Chats</div>
@@ -28,6 +37,13 @@ const Sidebar = () => {
            <ChatTab chatData={chat} key={index}/>
           )
         })}
+        <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+          <h2 className={styles.text}>Add your Friends</h2>
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faPlus} />
+          </div>
+        </div>
+        <Modal showModal={showModal} setShowModal={setShowModal} />
     </div>
   )
 }

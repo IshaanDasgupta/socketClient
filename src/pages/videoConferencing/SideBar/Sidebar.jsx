@@ -22,17 +22,19 @@ const Sidebar = (props) => {
   const userProfilePic = useSelector((state) => state.userDetails.profilePic);
 
   const handleSend = async() => {
-    if (userID.length > 0){
-      const res = await axios.get(`https://socketserver-9w11.onrender.com/api/user/${userID}`);
-      socket.current.emit("sendMessageInRoom" , {roomID , senderID:userID , senderName:res.data.name , senderPfp:userProfilePic , message:msg});
-      setChatMessages(prevMessages => [...prevMessages , {senderID:userID , senderName:res.data.name , senderPfp:userProfilePic , message:msg}]);
-      setMsg("");
-    }
-    else{
-      const guestPfp = multiavatart("Guest");
-      socket.current.emit("sendMessageInRoom" , {roomID , senderID:socket.current.id , senderName:"Guest "+socket.current.id.substr(0,4) , senderPfp:guestPfp , message:msg});
-      setChatMessages(prevMessages => [...prevMessages , {senderID:socket.current.id , senderName:"Guest "+socket.current.id.substr(0,4) , senderPfp:guestPfp , message:msg}]);
-      setMsg("");
+    if (msg.length > 0){
+      if (userID.length > 0){
+        const res = await axios.get(`https://socketserver-9w11.onrender.com/api/user/${userID}`);
+        socket.current.emit("sendMessageInRoom" , {roomID , senderID:userID , senderName:res.data.name , senderPfp:userProfilePic , message:msg});
+        setChatMessages(prevMessages => [...prevMessages , {senderID:userID , senderName:res.data.name , senderPfp:userProfilePic , message:msg}]);
+        setMsg("");
+      }
+      else{
+        const guestPfp = multiavatart("Guest");
+        socket.current.emit("sendMessageInRoom" , {roomID , senderID:socket.current.id , senderName:"Guest "+socket.current.id.substr(0,4) , senderPfp:guestPfp , message:msg});
+        setChatMessages(prevMessages => [...prevMessages , {senderID:socket.current.id , senderName:"Guest "+socket.current.id.substr(0,4) , senderPfp:guestPfp , message:msg}]);
+        setMsg("");
+      }
     }
   }
 

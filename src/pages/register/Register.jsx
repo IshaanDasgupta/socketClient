@@ -17,6 +17,7 @@ const Register = () => {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     const [profilePic , setProfilePicLocal] = useState();
+    const [buffering , setBuffering] = useState(false);
 
     const [state , setState] = useState(1);
 
@@ -57,6 +58,7 @@ const Register = () => {
             setState(2);
         }
         else{
+            setBuffering(true);
             try{
                 const res = await axios.post('https://socketserver-9w11.onrender.com/api/user/register' , {name:name , email : email , password: password , profilePic: profilePic});
                 dispatch(setUserId(res.data._id));
@@ -65,8 +67,9 @@ const Register = () => {
                 navigate("/");
             }
             catch(err){
-                console.log(err);
+                setState(1);
             }
+            setBuffering(false);
         }
     }
 
@@ -97,10 +100,15 @@ const Register = () => {
                 {state === 2 ? 
                     <div className={styles.flex}>
                         <div onClick={changeIcon} className={styles.refreshButton}>Refresh</div>
-                        <div onClick={sumbit} className={styles.button}>Sign Up &gt;</div>
+                        {buffering === false ?
+                            <div onClick={sumbit} className={styles.button}>Sign Up &gt;</div>
+                        :
+                            <div className={styles.disabledButton}>Sign Up &gt;</div>
+                        }
                     </div>
                 :
                     <div onClick={sumbit} className={styles.button}>Next &gt;</div>
+  
                 }
             </div>
         </div>

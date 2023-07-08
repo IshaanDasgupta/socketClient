@@ -11,6 +11,7 @@ import DisableChatIcon from "../../../static/videoConferencing/DisableChatIcon.s
 
 
 import styles from "./videoFeed.module.css";
+import { useSelector } from 'react-redux';
 
 const VideoFeed = (props) => {
 
@@ -24,13 +25,16 @@ const VideoFeed = (props) => {
   const [heightPerVid , setHeightPerVid] = useState();
   const [videoOption , setVideoOption] = useState(true);
   const [audioOption , setAudioOption] = useState(true);
+
+  const userMongoID = useSelector((state) => state.userDetails.userId);
+
+  const socket = props.socket;;
   const chatOption = props.chatOption;
   const setChatOption = props.setChatOption;
-
-  const socket = props.socket;
   const userStream = props.userStream;
   const setUserStream = props.setUserStream;
   const otherVideoStream = props.otherVideoStream;
+  const otherMongoID = props.otherMongoID;
 
   const count = 1 + otherVideoStream.length;
   const col = Math.ceil(Math.sqrt(count));
@@ -136,9 +140,9 @@ const VideoFeed = (props) => {
                 {rowVideos.map((videoStream ,indx) => {
                   return (
                     index === 0 && indx === 0 ? 
-                      <Video stream={videoStream} width={widthPerVid} heightPerVid={heightPerVid} muted={true}/>
+                      <Video stream={videoStream} id={userMongoID} width={widthPerVid} heightPerVid={heightPerVid} muted={true}/>
                     : 
-                      <Video stream={videoStream} width={widthPerVid} heightPerVid={heightPerVid} />
+                      <Video stream={videoStream} id={otherMongoID[indx-1]} width={widthPerVid} heightPerVid={heightPerVid} />
                   )
                 })}
               </div>
