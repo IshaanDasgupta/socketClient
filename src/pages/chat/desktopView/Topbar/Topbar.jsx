@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import Logo from "../../../static/videoConferencing/Icon.svg";
+import Logo from "../../../../static/videoConferencing/Icon.svg";
 import {useNavigate} from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/fontawesome-free-solid'
 
 import styles from "./topbar.module.css";
 import axios from 'axios';
 
-const Topbar = () => {
+const Topbar = (props) => {
 
     const [username , setUsername] = useState("");
 
@@ -30,20 +32,20 @@ const Topbar = () => {
 
     const navigate = useNavigate();
 
+    const toggleFriends = () => {
+        props.setDisplayFriends((prev) => !prev);
+    }
+
     return (
         <div className={styles.container}>
-            <img src={Logo} alt="" className={styles.logo} onClick={navigate("/")}/>     
-            {userProfilePic && userProfilePic.length > 0 ?       
-                    <div className={styles.userFlex}>
-                        <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
-                        <p className={styles.username}>{username}</p>
-                    </div>
-                :
-                    <div className={styles.flex}>
-                        <div className={styles.button1} onClick={() => {navigate("/register")}} >Sign Up</div>
-                        <div className={styles.button2} onClick={() => {navigate("/login")}} >Login</div>
-                    </div>
-            }
+            <img src={Logo} alt="" className={styles.logo} onClick={() => navigate("/")}/>     
+            <div className={styles.userFlex}>
+                <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
+                <p className={styles.username}>{username}</p>
+            </div>
+            <div className={styles.friendsToggle}>
+                <FontAwesomeIcon icon={faBars} size="xl" className={styles.icon} onClick={toggleFriends} />
+            </div>
         </div>
     )
 }

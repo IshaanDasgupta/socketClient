@@ -131,8 +131,6 @@ const Chatbox = () => {
           <button className={styles.button} onClick={handleSend}>Send</button>
         </div>
       </div>
-
-
     </div>
   )
 }

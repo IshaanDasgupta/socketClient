@@ -75,7 +75,6 @@
 }
 
 .button{
-    width: 10%;
     border-radius: 10px;
     border: none;
     transition: all 0.2s ease;
@@ -84,4 +83,85 @@
 .button:hover{
     background-color: #0b0d0f;
     color: white;
+}
+
+@media screen and (max-width: 1024px) {
+    .container{
+        width: 100%;
+    }
+
+    .titleContainer{
+        min-height: 20px;
+    }
+
+    .profilePic{
+        width: 30px;
+        height: 30px;
+    }
+
+    .chatContainer{
+        height: calc(100% - 112px);
+    }
+
+    .name{
+        font-size: 16px;
+    }
+
+    .inputContainer {
+        height: 40px;
+    }
+
+    .input {
+        height: 40px;
+        font-size: 10px;
+        width: calc(100% - 90px);
+    }
+
+    .button{
+        padding: 0 20px;
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .container{
+        padding: 20px;
+    }
+
+    .titleContainer{
+        padding: 10px 10px;
+    }
+
+    .name {
+        font-size: 12px;
+    }
+
+    .chatContainer {
+        height: calc(100% - 107px);
+    }
+
+    .inputContainer {
+        height: 35px;
+    }
+
+    .input {
+        height: 35px;
+        font-size: 8px;
+        width: calc(100% - 70px);
+    }
+
+    .button{
+        padding: 0 10px;
+        font-size: 8px;
+    }
+
+    .chats {
+        padding: 10px;
+    }
+}
+
+@media screen and (min-width:1026px) {
+    .button{
+        width: 10%;
+    }
 }

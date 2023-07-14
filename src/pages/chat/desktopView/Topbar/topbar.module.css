@@ -1,6 +1,6 @@
 .container{
     height: 54px;
-    background-color: #161929;
+    background-color: #0b0d0f;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,6 +64,10 @@
     font-size: 14px;
 }
 
+.icon{
+    color: #fff;
+}
+
 @media screen and (max-width: 1024px) {
     .container {
         height: 38px;
@@ -99,5 +103,11 @@
     .button2 {
         font-size: 12px;
         padding: 8px;
+    }
+}
+
+@media screen and (min-width: 1026px) {
+    .friendsToggle{
+        display: none;
     }
 }

@@ -51,3 +51,13 @@
         font-size: 13px;
     }
 }
+
+@media screen and (max-width: 1024px) {
+    .container{
+        box-sizing: border-box;
+        position: absolute;
+        height: calc(100vh - 58px);
+        width: 268px;
+        right: 0;
+    }
+}
