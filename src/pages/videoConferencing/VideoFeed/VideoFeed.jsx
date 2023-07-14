@@ -10,7 +10,6 @@ import DisableVideoIcon from "../../../static/videoConferencing/DisableVideoIcon
 import DisableAudioIcon from "../../../static/videoConferencing/DisableAudioIcon.svg";
 import DisableChatIcon from "../../../static/videoConferencing/DisableChatIcon.svg";
 
-
 import styles from "./videoFeed.module.css";
 import { useSelector } from 'react-redux';
 

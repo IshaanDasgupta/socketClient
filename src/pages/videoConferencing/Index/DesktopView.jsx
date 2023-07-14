@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import io from "socket.io-client";
 import {Peer} from 'peerjs';
 
@@ -24,6 +24,7 @@ const VideoConferencing = (props) => {
     const [roomName , setRoomName] = useState("");
     const [roomTimestamp , setRoomTimestamp] = useState("");
 
+    const navigate = useNavigate();
 
     const dispath = useDispatch();
 
@@ -89,17 +90,13 @@ const VideoConferencing = (props) => {
                         setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID , senderPfp:msgDetails.senderPfp , senderName:msgDetails.senderName}])
                     })
 
-                }).catch(err => console.log(err))
+                }).catch(err => navigate("/"))
                 
             })
 
         })
 
     }, []);
-
-    useEffect(() => {
-        console.log(otherVideoStream);
-    }, [callList])
 
     return (
         <div>
