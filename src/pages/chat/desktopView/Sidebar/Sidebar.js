@@ -32,15 +32,71 @@ const Sidebar = () => {
   return (
     <div className={styles.container}>
         <div className={styles.heading}>Your Chats</div>
-        {chats.map((chat, index)=>{
-          return(
-           <ChatTab chatData={chat} key={index}/>
-          )
-        })}
-        <div className={styles.addFriendContainer} onClick={handleShowModal}> 
-          <h2 className={styles.text}>Add your Friends</h2>
-          <div className={styles.iconContainer}>
-            <FontAwesomeIcon icon={faPlus} />
+        <div className={styles.friendsContainer}>
+          {chats.map((chat, index)=>{
+            return(
+            <ChatTab chatData={chat} key={index}/>
+            )
+          })}
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
+          </div>
+          <div className={styles.addFriendContainer} onClick={handleShowModal}> 
+            <h2 className={styles.text}>Add your Friends</h2>
+            <div className={styles.iconContainer}>
+              <FontAwesomeIcon icon={faPlus} />
+            </div>
           </div>
         </div>
         <Modal showModal={showModal} setShowModal={setShowModal} />
