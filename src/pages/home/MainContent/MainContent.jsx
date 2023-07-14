@@ -9,7 +9,8 @@ const MainContent = () => {
     <div className={styles.container}>
       <div>
         <h1 className={styles.heading}>Welcome to My Project !</h1>
-        <p className={styles.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit consequuntur architecto deleniti nam porro, repellat excepturi! Reiciendis sapiente ipsam, enim repudiandae culpa amet! Molestiae alias eveniet in quos officiis? Laudantium.</p>
+        <p className={styles.description}>
+This plarform was made by using web-sockets, React, Node, and Express. With real-time, high-quality video communication, users can engage in seamless virtual meetings. The dynamic user interface built on React ensures an interactive experience, while integrated chat functionality enhances collaboration.</p>
         {/* <div className={styles.linkFlex}>
           <div className={styles.linkContainerBlue}>
             <img src={GithubIcon} alt="" className={styles.icon}/>

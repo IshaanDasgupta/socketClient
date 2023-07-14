@@ -65,3 +65,24 @@
     color: white;
     align-self: flex-end;
 }
+
+@media screen and (max-width: 1024px) {
+    .ownContainer{
+        max-width: calc(100% * 0.6);
+    }
+
+    .otherContainer{
+        max-width: calc(100% * 0.6);
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .name{
+        font-size: 10px;
+    }
+
+    .text{
+        font-size: 12px;
+        line-height: 16px;
+    }
+}

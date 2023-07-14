@@ -96,3 +96,49 @@
     right: 10px;
     cursor: pointer;
 }
+
+@media screen and (max-width: 1024px) {
+    .container {
+        height: calc(100vh - 58px);
+    }
+
+    .buttonContainer {
+        height: 58px;
+    }
+
+    .optionContainer{
+        gap: 10px;
+    }
+
+    .option {
+        width: 35px;
+        height: 35px;
+    }
+
+    .disabledOption {
+        width: 35px;
+        height: 35px;
+    }
+
+    .disable {
+        width: 35px;
+        height: 35px;
+    }
+
+    .optionIcon{
+        width: 18px;
+        height: 18px;
+    }
+
+    .endCallButton{
+        font-size: 10px;
+        padding: 0 10px;
+        height: 35px;
+    }
+}
+
+@media screen and (max-width: 426px){
+    .endCallButton {
+        font-size: 8px;
+    }
+}

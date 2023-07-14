@@ -53,4 +53,22 @@
     letter-spacing: 0.5px;
     text-align: center;
     margin-top: 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 520px) {
+    .loginSVG{
+        width: 250px;
+        margin-bottom: 25px;
+    }
+
+    .input{
+        width: 200px;
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    .button{
+        font-size: 12px;
+    }
 }

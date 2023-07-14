@@ -20,6 +20,19 @@
 .flex{
     display: flex;
     gap: 20px;
+    align-items: center;
+}
+
+.userFlex{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.username{
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
 }
 
 .button1{
@@ -48,4 +61,42 @@
     font-weight: 500px;
     letter-spacing: -0.5px;
     font-size: 14px;
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        height: 38px;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .profilePic {
+        width: 30px;
+        height: 30px;
+    }
+
+    .userFlex {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .username {
+        font-size: 12px;
+    }
+
+    .button1 {
+        font-size: 12px;
+        padding: 8px;
+        border: 1px solid #1A71FF;
+    }
+
+    .button2 {
+        font-size: 12px;
+        padding: 8px;
+    }
 }

@@ -1,7 +1,6 @@
 .container{
     width: 60%;
     box-sizing: border-box;
-    height: calc(100vh - 74px);
     background-color: #1F2335;
     padding: 50px;
     display: flex;
@@ -70,4 +69,45 @@
     line-height: 36px;
     margin-bottom: 20px;
     margin: 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .heading {
+        font-size: 38px;
+    }
+
+    .description {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+
+
+@media screen and (max-width: 1024px) {
+    .container {
+        width: 100%;
+        /* min-height: calc(80vh - 74px); */
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container {
+        height: calc(100vh - 74px);
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .container {
+        padding: 25px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+    
+    .description {
+        width: 100%;
+        font-size: 14px;
+        line-height: 22px;
+    }
 }

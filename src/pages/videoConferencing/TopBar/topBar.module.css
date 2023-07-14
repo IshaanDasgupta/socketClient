@@ -88,3 +88,60 @@
     font-weight: 500;
     line-height: normal;
 }
+
+@media screen and (max-width: 1024px) {
+    .container {
+        height: 58px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+
+    .iconContainer {
+        width: 30px;
+        height: 30px;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+
+    .date {
+        font-size: 8px;
+    }
+
+    .copyButton{
+        gap: 8px;
+        padding: 6px 16px;
+    }
+
+    .copyText{
+        font-size: 10px;
+    }
+
+    .copyIcon{
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .container {
+        padding: 10px;
+    }
+
+    .flex{
+        gap: 10px;
+    }
+
+    .iconContainer {
+        border: 3px solid #161929;
+    }
+
+    .copyButton {
+        display: none;
+    }
+}

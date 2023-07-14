@@ -6,3 +6,9 @@
 .flex1{
     flex: 1;
 }
+
+@media screen and (max-width: 1024px) {
+    .flex{
+        flex-direction: column;
+    }
+}

@@ -1,13 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import Logo from "../../../static/videoConferencing/Icon.svg";
 import {useNavigate} from "react-router-dom";
 
 import styles from "./topbar.module.css";
+import axios from 'axios';
 
 const Topbar = () => {
 
+    const [username , setUsername] = useState("");
+
     const userProfilePic = useSelector((state) => state.userDetails.profilePic);
+    const userId = useSelector((state) => state.userDetails.userId);
+
+    useEffect(() => {
+        const fetchUsername = async() => {
+            try{
+                const res = await axios.get(`https://socketserver-9w11.onrender.com/api/user/${userId}`);
+                // console.log(`https://socketserver-9w11.onrender.com/api/user/{${userId}}`);
+                setUsername(res.data.name);
+            }   
+            catch(err){
+                console.log(err);
+            }
+        }
+
+        fetchUsername();
+    })
 
     const navigate = useNavigate();
 
@@ -15,7 +34,10 @@ const Topbar = () => {
         <div className={styles.container}>
             <img src={Logo} alt="" className={styles.logo}/>     
             {userProfilePic && userProfilePic.length > 0 ?       
-                    <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
+                    <div className={styles.userFlex}>
+                        <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
+                        <p className={styles.username}>{username}</p>
+                    </div>
                 :
                     <div className={styles.flex}>
                         <div className={styles.button1} onClick={() => {navigate("/register")}} >Sign Up</div>

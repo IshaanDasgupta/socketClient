@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import Video from "../../../components/Video/Video"
+import Video from "../../../components/Video/Video";
+import CopyIcon from "../../../static/videoConferencing/CopyIcon.svg";
 import VideoIcon from "../../../static/videoConferencing/VideoIcon.svg";
 import AudioIcon from "../../../static/videoConferencing/AudioIcon.svg";
 import ChatIcon from "../../../static/videoConferencing/ChatIcon.svg";
@@ -109,6 +110,10 @@ const VideoFeed = (props) => {
     setChatOption(prevState => !prevState);
   }
 
+  const copyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+  }
+
   const option = [
     {
       icon: VideoIcon,
@@ -127,6 +132,12 @@ const VideoFeed = (props) => {
       function: triggerChat,
       disableIcon: DisableChatIcon,
       state: chatOption
+    },
+    {
+      icon: CopyIcon,
+      function: copyLink,
+      disableIcon: CopyIcon,
+      state: true,
     }
   ];
 
