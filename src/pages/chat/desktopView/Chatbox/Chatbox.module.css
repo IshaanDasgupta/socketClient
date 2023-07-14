@@ -30,7 +30,7 @@
 }
 
 .chatContainer{
-    height: calc(100% - 120px);
+    height: calc(100vh - 258px);
     overflow-y: scroll;
 }
 
@@ -100,7 +100,7 @@
     }
 
     .chatContainer{
-        height: calc(100% - 112px);
+        height: calc(100vh - 229px);
     }
 
     .name{
@@ -137,7 +137,7 @@
     }
 
     .chatContainer {
-        height: calc(100% - 107px);
+        height: calc(100vh - 196px);
     }
 
     .inputContainer {

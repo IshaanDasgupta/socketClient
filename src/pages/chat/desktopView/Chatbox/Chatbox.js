@@ -77,7 +77,6 @@ const Chatbox = () => {
 
 
   const handleSend = async(e) => {
-      e.preventDefault();
       if (currMessage != null && currMessage.length > 0){
       try{
         const {data} = await axios.post('https://socketserver-9w11.onrender.com/api/message' , {chatID : chatID , senderID: userId , text : currMessage});

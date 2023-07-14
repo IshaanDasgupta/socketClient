@@ -28,7 +28,7 @@ const ChatBubble = (props) => {
             {props.text}
         </div>
         {props.createdAt && 
-          <div className={styles.time}>
+          <div className={props.senderID === userId || props.senderID === socketID ? styles.time : styles.otherTime}>
               {format(props.createdAt)}
           </div>
         }

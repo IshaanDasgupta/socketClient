@@ -94,7 +94,7 @@ const Cards = () => {
         :
 
           <div className={styles.disabledCard}>
-              <h2 className={styles.disabledHeading}>CHAT WITH YOUR FRIEDNS</h2>
+              <h2 className={styles.disabledHeading}>CHAT WITH YOUR FRIENDS</h2>
               <p className={styles.disabledDescription}>Add your friends through thier email and chat with them in real-time !</p>
               <div className={styles.button} onClick={handleLogin}>You need to Login to start chatting</div>
           </div>
