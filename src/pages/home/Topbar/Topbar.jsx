@@ -17,7 +17,6 @@ const Topbar = () => {
         const fetchUsername = async() => {
             try{
                 const res = await axios.get(`https://socketserver-9w11.onrender.com/api/user/${userId}`);
-                // console.log(`https://socketserver-9w11.onrender.com/api/user/{${userId}}`);
                 setUsername(res.data.name);
             }   
             catch(err){
@@ -26,13 +25,13 @@ const Topbar = () => {
         }
 
         fetchUsername();
-    })
+    }, []);
 
     const navigate = useNavigate();
 
     return (
         <div className={styles.container}>
-            <img src={Logo} alt="" className={styles.logo} onClick={navigate("/")}/>     
+            <img src={Logo} alt="" className={styles.logo} onClick={() => navigate("/")}/>     
             {userProfilePic && userProfilePic.length > 0 ?       
                     <div className={styles.userFlex}>
                         <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />

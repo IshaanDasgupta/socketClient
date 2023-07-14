@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from "./cards.module.css";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { io } from 'socket.io-client';
 
 const Cards = () => {
   const [roomName , setRoomName] = useState("");
@@ -11,13 +10,9 @@ const Cards = () => {
   const socket = useRef();
 
   const userID = useSelector((state) => state.userDetails.userId);
-  console.log(userID);
+  console.log("here" ,userID);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    socket.current = io('https://socketserver-9w11.onrender.com');
-  }, []);
 
   const randomASCII = () => {
       return Math.floor(Math.random() * (122 - 97 + 1)) + 97;
