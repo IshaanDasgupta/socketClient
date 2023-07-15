@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Video from "../../../components/Video/Video";
 import CopyIcon from "../../../static/videoConferencing/CopyIcon.svg";
@@ -111,6 +113,16 @@ const VideoFeed = (props) => {
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href);
+    toast.success("Copied to Clipboard", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   }
 
   const option = [
@@ -141,56 +153,67 @@ const VideoFeed = (props) => {
   ];
 
   return (
-    <div className={styles.container} ref={containerRef}>
-      <div className={styles.videoFeed}>
-        { 
-          arrayOfVideos.map((rowVideos , index) => {
-            return(
-              <div className={styles.row} style={{height: ` ${heightPerVid}px`}}>
-                {rowVideos.map((videoStream ,indx) => {
+    <>
+      <ToastContainer/>
+      <div className={styles.container} ref={containerRef}>
+        <div className={styles.videoFeed}>
+          { 
+            arrayOfVideos.map((rowVideos , index) => {
+              return(
+                <div className={styles.row} style={{height: ` ${heightPerVid}px`}}>
+                  {rowVideos.map((videoStream ,indx) => {
+                    return (
+                      index === 0 && indx === 0 ? 
+                        <Video stream={videoStream} id={userMongoID} width={widthPerVid} heightPerVid={heightPerVid} muted={true}/>
+                      : 
+                        <Video stream={videoStream} id={otherMongoID[indx-1]} width={widthPerVid} heightPerVid={heightPerVid} />
+                    )
+                  })}
+                </div>
+              )
+            })
+          }
+        </div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.optionContainer}>
+            {userStream ?  
+                option.map((optionObj , index) => {
                   return (
-                    index === 0 && indx === 0 ? 
-                      <Video stream={videoStream} id={userMongoID} width={widthPerVid} heightPerVid={heightPerVid} muted={true}/>
-                    : 
-                      <Video stream={videoStream} id={otherMongoID[indx-1]} width={widthPerVid} heightPerVid={heightPerVid} />
-                  )
-                })}
-              </div>
-            )
-          })
-        }
-      </div>
-      <div className={styles.buttonContainer}>
-        <div className={styles.optionContainer}>
-          {userStream ?  
-              option.map((optionObj) => {
-                return (
-                  optionObj.state === true ? 
-                    <div className={styles.option} onClick={optionObj.function}>
+
+                    index === 3 ?
+                    <div className={styles.copyOption} onClick={optionObj.function}>
                       <img src={optionObj.icon} alt="" className={styles.optionIcon} />
                     </div>
-                  :
 
-                    <div className={styles.disabledOption} onClick={optionObj.function}>
-                      <img src={optionObj.disableIcon} alt="" className={styles.optionIcon} />
+                    :
+
+                    optionObj.state === true ? 
+                      <div className={styles.option} onClick={optionObj.function}>
+                        <img src={optionObj.icon} alt="" className={styles.optionIcon} />
+                      </div>
+                    :
+
+                      <div className={styles.disabledOption} onClick={optionObj.function}>
+                        <img src={optionObj.disableIcon} alt="" className={styles.optionIcon} />
+                      </div>
+                  );
+                })
+              :
+                option.map((optionObj) => {
+                  return (
+                    <div className={styles.disable}>
+                      <img src={optionObj.icon} alt="" className={styles.optionIcon} />
                     </div>
-                );
-              })
-            :
-              option.map((optionObj) => {
-                return (
-                  <div className={styles.disable}>
-                    <img src={optionObj.icon} alt="" className={styles.optionIcon} />
-                  </div>
-                );
-              })
-          }
-          <div className={styles.endCallButton} onClick={handleEndCall}>
-            <p className={styles.endCallText}>End Call</p>
+                  );
+                })
+            }
+            <div className={styles.endCallButton} onClick={handleEndCall}>
+              <p className={styles.endCallText}>End Call</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

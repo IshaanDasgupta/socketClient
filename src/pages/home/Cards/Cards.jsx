@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from "./cards.module.css";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { io } from 'socket.io-client';
 
 const Cards = () => {
   const [roomName , setRoomName] = useState("");
@@ -10,9 +11,13 @@ const Cards = () => {
   const socket = useRef();
 
   const userID = useSelector((state) => state.userDetails.userId);
-  console.log("here" ,userID);
+  // console.log(userID);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    socket.current = io('https://socketserver-9w11.onrender.com');
+  }, []);
 
   const randomASCII = () => {
       return Math.floor(Math.random() * (122 - 97 + 1)) + 97;
@@ -66,6 +71,12 @@ const Cards = () => {
     }
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter'){
+      handleGeneratingRoom();
+    }
+  }
+
   const handleChat = () => {
     navigate("/chat");
   }
@@ -80,7 +91,7 @@ const Cards = () => {
             <h2 className={styles.heading}>CREATE A NEW ROOM</h2>
             <p className={styles.description}>Create your own meeting room to effortlessly connect with anyone by sharing the meet link.</p>
             <div className={styles.flex}>
-              <input type="text" placeholder='Enter your room name...' onChange={(e) => setRoomName(e.target.value)} className={styles.input}/>
+              <input type="text" placeholder='Enter your room name...' onChange={(e) => setRoomName(e.target.value)} className={styles.input} onKeyDown={handleKeyPress}/>
               <div onClick={handleGeneratingRoom} className={styles.button}>New Room</div>
             </div>
         </div>
@@ -94,7 +105,7 @@ const Cards = () => {
         :
 
           <div className={styles.disabledCard}>
-              <h2 className={styles.disabledHeading}>CHAT WITH YOUR FRIENDS</h2>
+              <h2 className={styles.disabledHeading}>CHAT WITH YOUR FRIEDNS</h2>
               <p className={styles.disabledDescription}>Add your friends through thier email and chat with them in real-time !</p>
               <div className={styles.button} onClick={handleLogin}>You need to Login to start chatting</div>
           </div>

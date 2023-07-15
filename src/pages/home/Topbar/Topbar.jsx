@@ -34,8 +34,8 @@ const Topbar = () => {
             <img src={Logo} alt="" className={styles.logo} onClick={() => navigate("/")}/>     
             {userProfilePic && userProfilePic.length > 0 ?       
                     <div className={styles.userFlex}>
-                        <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
                         <p className={styles.username}>{username}</p>
+                        <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
                     </div>
                 :
                     <div className={styles.flex}>

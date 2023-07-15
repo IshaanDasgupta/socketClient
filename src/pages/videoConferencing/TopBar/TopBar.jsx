@@ -7,6 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import multiavatart from "@multiavatar/multiavatar";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TopBar = (props) => {
 
@@ -19,6 +21,16 @@ const TopBar = (props) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href);
+    toast.success("Copied to Clipboard", {
+      position: "top-right",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   }
 
   let svgCode  = useSelector((state) => state.userDetails.profilePic);
@@ -48,31 +60,34 @@ const TopBar = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.flex}>
-        <div onClick={handleNavigation} className={styles.centerFlex}>
-          <img src={Icon} alt="" className={styles.logo}/>
+    <>
+      <ToastContainer/>
+      <div className={styles.container}>
+        <div className={styles.flex}>
+          <div onClick={handleNavigation} className={styles.centerFlex}>
+            <img src={Icon} alt="" className={styles.logo}/>
+          </div>
+          <div>
+            <h1 className={styles.name}>{props.roomName}</h1>
+            <p className={styles.date}>{props.roomTimestamp}</p>
+          </div>
         </div>
-        <div>
-          <h1 className={styles.name}>{props.roomName}</h1>
-          <p className={styles.date}>{props.roomTimestamp}</p>
+        <div className={styles.flex}>
+          <div className={styles.iconFlex}>
+            {otherPfp.map((svgCode) => {
+              return (
+                <div className={styles.iconContainer} dangerouslySetInnerHTML={{__html: svgCode}}/>
+              );
+            })}
+            <div className={styles.iconContainer} dangerouslySetInnerHTML={{__html: svgCode}}/>
+          </div>
+          <div className={styles.copyButton} onClick={handleCopy}>
+            <img src={CopyButton} alt="" className={styles.copyIcon}/>
+            <p className={styles.copyText}>{roomID}</p>
+          </div>
         </div>
       </div>
-      <div className={styles.flex}>
-        <div className={styles.iconFlex}>
-          {otherPfp.map((svgCode) => {
-            return (
-              <div className={styles.iconContainer} dangerouslySetInnerHTML={{__html: svgCode}}/>
-            );
-          })}
-          <div className={styles.iconContainer} dangerouslySetInnerHTML={{__html: svgCode}}/>
-        </div>
-        <div className={styles.copyButton} onClick={handleCopy}>
-          <img src={CopyButton} alt="" className={styles.copyIcon}/>
-          <p className={styles.copyText}>{roomID}</p>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
 

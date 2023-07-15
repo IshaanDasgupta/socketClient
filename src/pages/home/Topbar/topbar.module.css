@@ -24,10 +24,11 @@
     align-items: center;
 }
 
-.userFlex{
+.userFlex {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .username{
@@ -77,13 +78,6 @@
     .profilePic {
         width: 30px;
         height: 30px;
-    }
-
-    .userFlex {
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
     }
 
     .username {

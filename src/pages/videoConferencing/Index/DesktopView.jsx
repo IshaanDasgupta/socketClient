@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import io from "socket.io-client";
 import {Peer} from 'peerjs';
-
 import TopBar from "../TopBar/TopBar";
 import VideoFeed from "../VideoFeed/VideoFeed";
 import Sidebar from "../SideBar/Sidebar";
-
 import styles from "./desktopView.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setSocketID } from "../../../features/socketDetails/socketDetails";
@@ -90,7 +88,7 @@ const VideoConferencing = (props) => {
                         setChatMessages(prevMessages => [...prevMessages , {message:msgDetails.message , senderID:msgDetails.senderID , senderPfp:msgDetails.senderPfp , senderName:msgDetails.senderName}])
                     })
 
-                }).catch(err => navigate("/"))
+                }).catch((err) => navigate("/"))
                 
             })
 

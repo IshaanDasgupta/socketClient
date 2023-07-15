@@ -5,6 +5,9 @@ import SendButton from "../../../static/videoConferencing/SendButton.svg";
 import ChatBubble from '../../../components/chatBubble/ChatBubble';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import styles from "./sideBar.module.css";
 
@@ -36,6 +39,18 @@ const Sidebar = (props) => {
         setMsg("");
       }
     }
+    else{
+      toast.warn("Can't send an empty message", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
   }
 
   const handleKeyPress = (e) => {
@@ -45,25 +60,28 @@ const Sidebar = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.chatContainer}>
-        <div className={styles.chats}>
-          {chatMessages.map((messageDeatils) => {
-            return (
-              <ChatBubble senderID={messageDeatils.senderID} senderPfp={messageDeatils.senderPfp} text={messageDeatils.message} name={messageDeatils.senderName}/>
-            )
-          })}
+    <>
+      <ToastContainer/>
+      <div className={styles.container}>
+        <div className={styles.chatContainer}>
+          <div className={styles.chats}>
+            {chatMessages.map((messageDeatils) => {
+              return (
+                <ChatBubble senderID={messageDeatils.senderID} senderPfp={messageDeatils.senderPfp} text={messageDeatils.message} name={messageDeatils.senderName}/>
+              )
+            })}
+          </div>
         </div>
-      </div>
-      <div className={styles.bottom}>
-        <div className={styles.inputContainer}>
-          <input type="text" className={styles.input} placeholder='Type Something...' value={msg} onChange={(e)=> setMsg(e.target.value)} onKeyDown={handleKeyPress}/>
-          <div className={styles.sendButton}>
-            <img src={SendButton} alt="" className={styles.sendIcon} onClick={handleSend}/>
+        <div className={styles.bottom}>
+          <div className={styles.inputContainer}>
+            <input type="text" className={styles.input} placeholder='Type Something...' value={msg} onChange={(e)=> setMsg(e.target.value)} onKeyDown={handleKeyPress}/>
+            <div className={styles.sendButton}>
+              <img src={SendButton} alt="" className={styles.sendIcon} onClick={handleSend}/>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

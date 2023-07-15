@@ -40,8 +40,8 @@ const Topbar = (props) => {
         <div className={styles.container}>
             <img src={Logo} alt="" className={styles.logo} onClick={() => navigate("/")}/>     
             <div className={styles.userFlex}>
-                <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
                 <p className={styles.username}>{username}</p>
+                <div className={styles.profilePic} dangerouslySetInnerHTML={{__html:userProfilePic}} />
             </div>
             <div className={styles.friendsToggle}>
                 <FontAwesomeIcon icon={faBars} size="xl" className={styles.icon} onClick={toggleFriends} />

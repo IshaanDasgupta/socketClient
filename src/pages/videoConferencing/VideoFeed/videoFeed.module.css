@@ -47,6 +47,17 @@
     cursor: pointer;
 }
 
+.copyOption {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #1A71FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
 .disabledOption{
     width: 45px;
     height: 45px;
@@ -115,6 +126,11 @@
         height: 35px;
     }
 
+    .copyOption{
+        width: 35px;
+        height: 35px;
+    }
+    
     .disabledOption {
         width: 35px;
         height: 35px;
@@ -140,5 +156,11 @@
 @media screen and (max-width: 426px){
     .endCallButton {
         font-size: 8px;
+    }
+}
+
+@media screen and (min-width: 426px) {
+    .copyOption{
+        display: none;
     }
 }
